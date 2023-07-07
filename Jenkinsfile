@@ -12,7 +12,7 @@ node {
             junit 'test-reports/results.xml'
         }
     }
-    stage('Deliver') {
+    stage('Deploy') {
         input message: 'Lanjutkan Deploy ?'
         sh 'docker run --rm -v $(pwd)/sources:/src cdrx/pyinstaller-linux:python2 \'pyinstaller -F /src/add2vals.py\''
         archiveArtifacts artifacts: 'sources/add2vals.py', followSymlinks: false
