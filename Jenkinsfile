@@ -20,6 +20,7 @@ node {
             sh 'docker run --rm -v $(pwd)/sources:/src cdrx/pyinstaller-linux:python2 \'rm -rf build dist\''
             sleep time: 1, unit: 'MINUTES'
         } catch (error) {
+            sh "chmod +x -R ${env.WORKSPACE}"
             sh './jenkins/scripts/kill.sh'
         }
         // input message: 'Lanjutkan ke tahap Deploy ?'
