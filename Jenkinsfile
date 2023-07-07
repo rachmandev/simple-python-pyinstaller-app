@@ -6,12 +6,14 @@ node {
             sh 'python -m py_compile sources/add2vals.py sources/calc.py'
         }
     }
+    checkout scm
     withDockerContainer('qnib/pytest') {
         stage('Test') {
             sh 'py.test --junit-xml test-reports/results.xml sources/test_calc.py'
             junit 'test-reports/results.xml'
         }
     }
+    checkout scm
     stage('Deploy') {
         input message: 'Lanjutkan ke tahap Deploy ?'
         sh 'docker run --rm -v $(pwd)/sources:/src cdrx/pyinstaller-linux:python2 \'pyinstaller -F /src/add2vals.py\''
